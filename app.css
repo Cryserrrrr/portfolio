@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "thunder";
+  src: url('./src/font/Thunder-VF.ttf') format("truetype-variations");
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "thunder", sans-serif;
+  color: #fff;
+  cursor: none;
+}
