@@ -261,7 +261,7 @@ const Production = () => {
           <CarouselContainer
             initial={{ x: outerWidth > 768 ? 1000 : 0, y: outerWidth > 768 ? 0 : 1000}}
             animate={{ x: 0, y: 0 }}
-            transition={{ duration: 2, ease: easeInOut }}
+            transition={{ duration: 2.5, ease: easeInOut }}
           >
             <Carousel
               initial={{ x: 0 }}
@@ -323,7 +323,7 @@ const Production = () => {
             initial={{ x: outerWidth > 768 ? 1000 : 0, y: outerWidth > 768 ? 0 : 1000 }}
             animate={{ x: 0, y: 0 }}
             transition={{ duration: 2, ease: easeInOut }}
-          >réalisations</Title>
+          >Réalisations</Title>
         </TitleContainer>
       </Container>
     </div>

@@ -83,7 +83,7 @@ const LeftContainer = styled(motion.div)`
 
   @media (max-width: 768px) {
     width: 100%;
-    height: 70%;
+    height: 75%;
   }
 `;
 
@@ -259,8 +259,8 @@ const Skill = ({ setDisplay }) => {
           <SkillContainer
             key={index}
             initial={{ x: outerWidth > 768 ? 1000 : 0, y: outerWidth > 768 ? 0 : 1000 }}
-            animate={{ x: 0, y: 0 }}
-            transition={{ duration: 2, ease: easeOut, delay: index * 0.1 }}
+            animate={{ x:  outerWidth > 768 ? changingPage ? -2000 : 0 : 0, y: outerWidth > 768 ? 0 : changingPage ? -1000 : 0 }}
+            transition={{ duration: 2, ease: easeInOut, delay: index * (changingPage ? 0.02 : 0.1) }}
             onMouseEnter={() => setHoverSkill(skill.name)}
             onMouseLeave={() => handkeHoverSkill()}
             onClick={() => handleSkillClick(skill)}
@@ -289,14 +289,15 @@ const Skill = ({ setDisplay }) => {
   };
 
   const shake = () => {
-    return {
-      //value between 0 and 5
-      rotate: [0, 5, -5, 5, -5, 5, -5, 5, -5, 0],
-      transition: {
-        duration: 0.5,
-        ease: easeOut,
-      }
-    };
+    if (innerWidth > 768) {
+      return {
+        rotate: [0, 5, -5, 5, -5, 5, -5, 5, -5, 0],
+        transition: {
+          duration: 0.5,
+          ease: easeOut,
+        }
+      };
+    }
   };
 
   const displayDetails = () => {

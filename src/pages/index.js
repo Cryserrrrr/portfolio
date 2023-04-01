@@ -14,7 +14,7 @@ const Main = styled.main`
 
 const IndexPage = () => {
 
-  const [display, setDisplay] = React.useState(1);
+  const [display, setDisplay] = React.useState(0);
 
   return (
     <Main>
