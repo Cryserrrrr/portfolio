@@ -9,4 +9,5 @@ html, body {
   font-family: "thunder", sans-serif;
   color: #fff;
   cursor: none;
+  overflow: hidden;
 }

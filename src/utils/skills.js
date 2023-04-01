@@ -13,6 +13,7 @@ import github from '../images/github.svg';
 import gitlab from '../images/gitlab.svg';
 import jira from '../images/jira.svg';
 import notion from '../images/notion.svg';
+import arrow from '../images/arrow.svg';
 
 const skills = [
   {
@@ -104,6 +105,12 @@ const skills = [
     image: notion,
     description: 'Description de test',
     link: 'https://www.notion.so/'
+  },
+  {
+    name: 'Mes réalisations',
+    image: arrow,
+    description: 'Cliquez ici pour accéder à mes réalisations',
+    link: false
   },
 ];
 

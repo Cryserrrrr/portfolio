@@ -124,8 +124,6 @@ const Image = styled(motion.img)`
 
 const CustomCursor = styled(motion.div)`
   position: fixed;
-  top: 0;
-  left: 0;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -260,7 +258,7 @@ const Home = ({setDisplay}) => {
   };
 
   return (
-    <div onMouseMove={!changingPage ? page !== 2 ? handleMouse : null : null}>
+    <div onMouseMove={!changingPage ? page !== 1 ? handleMouse : null : null}>
       <OverPage/>
       <Container
         animate={{ x: page === 2 && outerWidth > 768 ? -2000 : 0, y: page === 2 && outerWidth <= 768 ? -1000 : 0, transition: { duration: 2, ease: easeInOut } }}

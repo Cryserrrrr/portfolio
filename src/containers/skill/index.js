@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { easeIn, motion, useMotionValue, useTransform , useAnimationControls, easeOut, easeInOut} from "framer-motion";
+import { motion, easeOut, easeInOut} from "framer-motion";
 //Utils
 import ui from "../../utils/theme";
 import skills from "../../utils/skills";
@@ -11,7 +11,7 @@ const OverPage = styled(motion.div)`
   left: 0;
   height: 100vh;
   width: 100vw;
-  background-color: ${ui.secondary};
+  background-color: ${props => props.changingPage ? ui.primary : ui.secondary};
   z-index: -1;
 `;
 
@@ -34,7 +34,7 @@ const Container = styled(motion.div)`
 `;
 
 const TitleContainer = styled.div`
-  display: ${props => props.removed ? 'none' : 'flex'};
+  display: flex;
   flex-direction: column;
   align-items: end;
   justify-content: center;
@@ -194,7 +194,7 @@ const HoverFooter = styled(motion.div)`
 `;
 
 
-const Skill = () => {
+const Skill = ({ setDisplay }) => {
 
   const isBrowser = () => typeof window !== "undefined"
   const [nbItemsByRow, setNbItemsByRow] = useState(null);
@@ -203,11 +203,12 @@ const Skill = () => {
   const [hoverBlack, setHoverBlack] = useState(false);
   const [hoverSkill, setHoverSkill] = useState(false);
   const [closeCard, setCloseCard] = useState(false);
+  const [changingPage, setChangingPage] = useState(false);
 
   const outerWidth = isBrowser() ? window.outerWidth : null;
 
   const onMouseMove = (e) => {
-    setMousePosition({ x: e.clientX - 20, y: e.clientY - 20 });
+    setMousePosition({ x: e.clientX - 30, y: e.clientY - 30 });
   };
 
   const onResize = () => {
@@ -257,14 +258,14 @@ const Skill = () => {
         row.push(
           <SkillContainer
             key={index}
-            initial={{ x: outerWidth >= 768 ? 1000 : 0, y: outerWidth >= 768 ? 0 : 1000 }}
+            initial={{ x: outerWidth > 768 ? 1000 : 0, y: outerWidth > 768 ? 0 : 1000 }}
             animate={{ x: 0, y: 0 }}
             transition={{ duration: 2, ease: easeOut, delay: index * 0.1 }}
             onMouseEnter={() => setHoverSkill(skill.name)}
-            onMouseLeave={() => handleSkillClick(false)}
+            onMouseLeave={() => handkeHoverSkill()}
             onClick={() => handleSkillClick(skill)}
           >
-            <Logo src={skill.image} />
+            <Logo src={skill.image} whileHover={shake}/>
           </SkillContainer>
         );
       if (i < nbItemsByRow) {
@@ -287,9 +288,20 @@ const Skill = () => {
     return rows;
   };
 
+  const shake = () => {
+    return {
+      //value between 0 and 5
+      rotate: [0, 5, -5, 5, -5, 5, -5, 5, -5, 0],
+      transition: {
+        duration: 0.5,
+        ease: easeOut,
+      }
+    };
+  };
+
   const displayDetails = () => {
     const skill = skills.find(skill => skill.name === hoverSkill);
-    const link = skill.link.replace(/(^\w+:|^)\/\//, '').replace('www.', '').replace(/\/$/, '');
+    const link = skill.link && skill.link.replace(/(^\w+:|^)\/\//, '').replace('www.', '').replace(/\/$/, '');
     if (innerWidth > 768) {
       return (
         <HoverContainer>
@@ -299,7 +311,7 @@ const Skill = () => {
           <HoverDescription initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             {skill.description}
           </HoverDescription>
-          <HoverFooter initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Cliquez pour accéder à {link}</HoverFooter>
+          <HoverFooter initial={{ opacity: 0 }} animate={{ opacity: 1 }}>{skill.link && `Cliquez pour accéder à ${link}`}</HoverFooter>
         </HoverContainer>
       );
     } else {
@@ -308,6 +320,7 @@ const Skill = () => {
           initial={{ opacity: 0, y: 1000 }}
           animate={{ opacity: 1, y: closeCard ? 1000 : 0 }}
           transition={{ duration: 0.5, ease: easeOut }}  
+          onClick={() => !skill.link && handleChangingPage()}
         >
           <HoverContainer>
             <HoverTitle initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -316,7 +329,7 @@ const Skill = () => {
             <HoverDescription initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               {skill.description}
             </HoverDescription>
-            <HoverFooter onClick={() => window.open(skill.link, "_blank")}>Cliquez ici pour acceder à {link}</HoverFooter>
+            <HoverFooter onClick={() => skill.link && window.open(skill.link, "_blank")}>{skill.link && `Cliquez ici pour accéder à ${link}`}</HoverFooter>
           </HoverContainer>
         </HoverMobile>
       );
@@ -324,32 +337,44 @@ const Skill = () => {
   };
 
   const handleSkillClick = (skill) => {
-    if (skill) {
-      if (innerWidth > 768) {
+    if (innerWidth > 768) {
+      if (skill.link) {
         window.open(skill.link, "_blank");
       } else {
-        setHoverSkill(skill.name)
+        handleChangingPage();
       }
     } else {
-      if (innerWidth > 768) {
+      setHoverSkill(skill.name)
+    }
+  };
+
+  const handleChangingPage = () => {
+    setChangingPage(true);
+    setTimeout(() => {
+      setChangingPage(false);
+      setDisplay(2);
+    }, 2000);
+  };
+
+  const handkeHoverSkill = () => {
+    if (innerWidth > 768) {
+      setHoverSkill(false);
+    } else {
+      setCloseCard(true);
+      setTimeout(() => {
         setHoverSkill(false);
-      } else {
-        setCloseCard(true);
-        setTimeout(() => {
-          setHoverSkill(false);
-          setCloseCard(false);
-        }, 500);
-      }
+        setCloseCard(false);
+      }, 500);
     }
   };
 
   return (
     <div style={{ overflow: "hidden" }} >
-      <OverPage />
+      <OverPage changingPage={changingPage}/>
       <Container
-        initial={{ x: outerWidth >= 768 ? 2000 : 0, y: outerWidth >= 768 ? 0 : 1000 }}
-        animate={{ x: 0, y: 0 }}
-        transition={{ duration: 2, ease: easeOut }}
+        initial={{ x: outerWidth > 768 ? 2000 : 0, y: outerWidth > 768 ? 0 : 1000 }}
+        animate={{ x:  outerWidth > 768 ? changingPage ? -2000 : 0 : 0, y: outerWidth > 768 ? 0 : changingPage ? -1000 : 0 }}
+        transition={{ duration: 2, ease: easeInOut }}
       >
         <CustomCursor
           mousePosition={mousePosition}
@@ -370,9 +395,9 @@ const Skill = () => {
         </LeftContainer>
         <TitleContainer onMouseEnter={() => setHoverBlack(true)} onMouseLeave={() => setHoverBlack(false)}>
           <Title
-            initial={{ x: outerWidth >= 768 ? 1000 : 0, y: outerWidth >= 768 ? 0 : 1000 }}
-            animate={{ x: 0, y: 0 }}
-            transition={{ duration: 2, ease: easeOut }}
+            initial={{ x: outerWidth > 768 ? 1000 : 0, y: outerWidth > 768 ? 0 : 1000 }}
+            animate={{ x:  outerWidth > 768 ? changingPage ? -1000 : 0 : 0, y: outerWidth > 768 ? 0 : changingPage ? -1000 : 0 }}
+            transition={{ duration: 2, ease: easeInOut }}
           >
             Compétences
           </Title>

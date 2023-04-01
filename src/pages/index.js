@@ -3,6 +3,7 @@ import styled from "styled-components";
 //Containers
 import Home from "../containers/home";
 import Skill from "../containers/skill";
+import Production from "../containers/production";
 
 const Main = styled.main`
   display: flex;
@@ -13,12 +14,13 @@ const Main = styled.main`
 
 const IndexPage = () => {
 
-  const [display, setDisplay] = React.useState(0);
+  const [display, setDisplay] = React.useState(1);
 
   return (
     <Main>
     {display === 0 && <Home setDisplay={setDisplay}/>}
     {display === 1 && <Skill setDisplay={setDisplay}/>}
+    {display === 2 && <Production setDisplay={setDisplay}/>}
     </Main>
   )
 }
