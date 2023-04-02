@@ -6,6 +6,7 @@ import ui from '../../utils/theme';
 import productions from '../../utils/production';
 //Images
 import arrow from '../../images/arrowWhite.svg';
+import arrowBlack from '../../images/arrow.svg';
 
 const OverPage = styled(motion.div)`
   position: absolute;
@@ -229,6 +230,10 @@ const Arrow = styled(motion.img)`
 const Sequence = styled(motion.div)`
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
 `;
 
 const BackButton = styled(motion.div)`
@@ -239,6 +244,16 @@ const BackButton = styled(motion.div)`
   width: 100%;
   font-size: 2rem;
   color: ${ui.primary};
+`;
+
+const Icon = styled(motion.img)`
+  height: 70px;
+  width: 70px;
+  margin-right: 20px;
+  transform: rotate(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const TitlePart = styled(motion.span)`
@@ -415,6 +430,7 @@ const Production = ({ setDisplay, goBack, setGoBack }) => {
             onClick={() => outerWidth > 768 && handleGoBack()}
           >
             <Sequence>
+            <Icon src={arrowBlack} animate={{ x: -10, rotate: hoverTitle ? 180 : 0 }} transition={{ duration: 0.2, ease: easeInOut, delay: 0.5 }} />
               R
                <TitlePart animate={controlTwo}>etour</TitlePart> 
                 <TitlePart animate={control}>éalisations</TitlePart>

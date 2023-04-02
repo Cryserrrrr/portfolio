@@ -14,7 +14,7 @@ const Main = styled.main`
 
 const IndexPage = () => {
 
-  const [display, setDisplay] = useState(0);
+  const [display, setDisplay] = useState(1);
   const [goBack, setGoBack] = useState(false);
 
   useEffect(() => {
