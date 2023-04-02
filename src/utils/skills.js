@@ -13,7 +13,7 @@ import github from '../images/github.svg';
 import gitlab from '../images/gitlab.svg';
 import jira from '../images/jira.svg';
 import notion from '../images/notion.svg';
-import arrow from '../images/arrow.svg';
+import arrow from '../images/arrowWhite.svg';
 
 const skills = [
   {

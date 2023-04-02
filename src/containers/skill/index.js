@@ -4,6 +4,8 @@ import { motion, easeOut, easeInOut} from "framer-motion";
 //Utils
 import ui from "../../utils/theme";
 import skills from "../../utils/skills";
+//Images
+import arrow from "../../images/arrow.svg";
 
 const OverPage = styled(motion.div)`
   position: absolute;
@@ -259,13 +261,13 @@ const Skill = ({ setDisplay, goBack }) => {
           <SkillContainer
             key={index}
             initial={{ x: outerWidth > 768 ? goBack ? -2000 : 2000 : 0, y: outerWidth > 768 ? 0 : goBack ? -1000 : 1000 }}
-            animate={{ x:  outerWidth > 768 ? changingPage ? -2000 : 0 : 0, y: outerWidth > 768 ? 0 : changingPage ? -2000 : 0 }}
+            animate={{ x:  outerWidth > 768 ? changingPage ? -2000 : 0 : 0, y: outerWidth > 768 ? 0 : changingPage ? -2000 : 0, backgroundColor: skill.name === "Mes réalisations" ? outerWidth <= 768 ? ui.secondary : ui.primary : "white" }}
             transition={{ duration: 2, ease: easeInOut, delay: goBack ? (-index * 0.1) + 1 : index * (changingPage ? 0.02 : 0.1) }}
             onMouseEnter={() => setHoverSkill(skill.name)}
             onMouseLeave={() => handkeHoverSkill()}
             onClick={() => handleSkillClick(skill)}
           >
-            <Logo src={skill.image} whileHover={shake}/>
+            <Logo src={skill.name === "Mes réalisations" && outerWidth <= 768 ? arrow : skill.image} whileHover={shake}/>
           </SkillContainer>
         );
       if (i < nbItemsByRow) {
