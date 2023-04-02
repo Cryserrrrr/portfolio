@@ -323,8 +323,8 @@ const Production = ({ setDisplay, goBack, setGoBack }) => {
     <div style={{ overflow: "hidden" }}>
       <OverPage />
       <Container
-        initial={{ x: outerWidth > 768 ? 1000 : 0, y: outerWidth > 768 ? 0 : 1000 }}
-        animate={{ x: goBack ? outerWidth > 768 ? 1000 : 0 : 0, y: goBack ? outerWidth > 768 ? 0 : 1000 : 0 }}
+        initial={{ x: outerWidth > 768 ? 2000 : 0, y: outerWidth > 768 ? 0 : 1000 }}
+        animate={{ x: goBack ? outerWidth > 768 ? 2000 : 0 : 0, y: goBack ? outerWidth > 768 ? 0 : 1000 : 0 }}
         transition={{ duration: 2, ease: easeInOut }}
       >
         <CustomCursor
@@ -345,8 +345,8 @@ const Production = ({ setDisplay, goBack, setGoBack }) => {
           onMouseLeave={() => setHoverBlack(false)}
         >
           <CarouselContainer
-            initial={{ x: outerWidth > 768 ? 1500 : 0, y: outerWidth > 768 ? 0 : 1000}}
-            animate={{ x: goBack ? outerWidth > 768 ? 1000 : 0 : 0, y: goBack ? outerWidth > 768 ? 0 : 1000 : 0 }}
+            initial={{ x: outerWidth > 768 ? 2000 : 0, y: outerWidth > 768 ? 0 : 1000}}
+            animate={{ x: goBack ? outerWidth > 768 ? 2000 : 0 : 0, y: goBack ? outerWidth > 768 ? 0 : 1000 : 0 }}
             transition={{ duration: 2.5, ease: easeInOut }}
           >
             <Carousel
@@ -407,8 +407,8 @@ const Production = ({ setDisplay, goBack, setGoBack }) => {
         <TitleContainer
         >
           <Title
-            initial={{ x: outerWidth > 768 ? 1000 : 0, y: outerWidth > 768 ? 0 : 1000 }}
-            animate={{ x: goBack ? outerWidth > 768 ? 1000 : 0 : hoverTitle ? 10 : 0, y: goBack ? outerWidth > 768 ? 0 : 1000 : 0 }}
+            initial={{ x: outerWidth > 768 ? 2000 : 0, y: outerWidth > 768 ? 0 : 1000 }}
+            animate={{ x: goBack ? outerWidth > 768 ? 2000 : 0 : hoverTitle ? 10 : 0, y: goBack ? outerWidth > 768 ? 0 : 1000 : 0 }}
             transition={{ duration: 2, ease: easeInOut }}
             onMouseEnter={() => outerWidth > 768 && setHoverTitle(true)}
             onMouseLeave={() => outerWidth > 768 && setHoverTitle(false)}

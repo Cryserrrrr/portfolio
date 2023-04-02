@@ -261,16 +261,17 @@ const Home = ({setDisplay}) => {
     <div onMouseMove={!changingPage ? page !== 1 ? handleMouse : null : null}>
       <OverPage/>
       <Container
-        animate={{ x: page === 2 && outerWidth > 768 ? -2000 : 0, y: page === 2 && outerWidth <= 768 ? -1000 : 0, transition: { duration: 2, ease: easeInOut } }}
+        animate={{ x: page === 2 && outerWidth > 768 ? '-250vh' : 0, y: page === 2 && outerWidth <= 768 ? -1000 : 0, transition: { duration: 2, ease: easeInOut } }}
       >
         <CustomCursor 
             mousePosition={mousePosition}
-            animate={{ 
+            animate={{
               scale: isHovering && !clickable ? arrow ? 0.8 : 1.5 : isHoveringDesc ? 0.3 : 1, 
               opacity: isHoveringText ? 0  : 1, 
               backgroundColor: isHovering && !arrow && !clickable? "unset" : hoverBlack ? ui.secondary : ui.primary, 
               border: isHovering && !clickable ?`2px solid ${ ui.secondary}` : "none", 
-              backdropFilter: isHovering && !arrow ? "blur(2px)" : "none" }}
+              backdropFilter: isHovering && !arrow ? "blur(2px)" : "none" 
+            }}
             transition={{ duration: 0.2 }}
           >{isHovering && (arrow ?  <Icon src={iconWhite} alt="arrow"/> : clickable ? null : "Click Me" )}</CustomCursor>
         <TitleContainer
@@ -293,7 +294,7 @@ const Home = ({setDisplay}) => {
           >Front-end Développeur</SubTitle>
           <Title
             initial={{ opacity: 0, y: 1000 }}
-            animate={{ opacity: 1, y: page > 0 ? outerWidth <= 768 ? outerWidth <= 375 ? -50 : -100 : 0 : page === 2 && outerWidth <= 768 ? -1000 : 1000, x: page > 1 && outerWidth > 768 ? -1000 : 0 }}
+            animate={{ opacity: 1, y: page > 0 ? outerWidth <= 768 ? outerWidth <= 375 ? -50 : -100 : 0 : page === 2 && outerWidth <= 768 ? -1000 : 1000, x: page > 1 && outerWidth > 768 ? -2000 : 0 }}
             transition={{ duration: page === 1 ? 2 : 1, ease: page === 1 ? "easeOut" : "easeIn" }}
             onMouseEnter={() => setIsHoveringText(true)}
             onMouseLeave={() => setIsHoveringText(false)}
@@ -301,7 +302,7 @@ const Home = ({setDisplay}) => {
           >Qui suis-je ?</Title>
           <Description
             initial={{ opacity: 0, y: 1000 }}
-            animate={{ opacity: 1, y: page > 0 ? outerWidth <= 768 ? outerWidth <= 375 ? -20: -50 : 0 : page === 2 && outerWidth <= 768 ? -1500 : 1000, x: page > 1 && outerWidth > 768 ? -1000 : 0  }}
+            animate={{ opacity: 1, y: page > 0 ? outerWidth <= 768 ? outerWidth <= 375 ? -20: -50 : 0 : page === 2 && outerWidth <= 768 ? -1500 : 1000, x: page > 1 && outerWidth > 768 ? -2000 : 0  }}
             transition={{ delay: page > 1 ? 0 : 0.2, duration: page === 1 ? 2 : 1, ease: page === 1 ? "easeOut" : "easeIn" }}
             onMouseEnter={() => setIsHoveringDesc(true)}
             onMouseLeave={() => setIsHoveringDesc(false)}

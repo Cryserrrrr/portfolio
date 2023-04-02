@@ -258,9 +258,9 @@ const Skill = ({ setDisplay, goBack }) => {
         row.push(
           <SkillContainer
             key={index}
-            initial={{ x: outerWidth > 768 ? goBack ? -1000 : 1000 : 0, y: outerWidth > 768 ? 0 : goBack ? -1000 : 1000 }}
-            animate={{ x:  outerWidth > 768 ? changingPage ? -2000 : 0 : 0, y: outerWidth > 768 ? 0 : changingPage ? -1000 : 0 }}
-            transition={{ duration: 2, ease: easeInOut, delay: goBack ? (-index * 0.1) + 2.5  : index * (changingPage ? 0.02 : 0.1) }}
+            initial={{ x: outerWidth > 768 ? goBack ? -2000 : 2000 : 0, y: outerWidth > 768 ? 0 : goBack ? -1000 : 1000 }}
+            animate={{ x:  outerWidth > 768 ? changingPage ? -2000 : 0 : 0, y: outerWidth > 768 ? 0 : changingPage ? -2000 : 0 }}
+            transition={{ duration: 2, ease: easeInOut, delay: goBack ? (-index * 0.1) + 1 : index * (changingPage ? 0.02 : 0.1) }}
             onMouseEnter={() => setHoverSkill(skill.name)}
             onMouseLeave={() => handkeHoverSkill()}
             onClick={() => handleSkillClick(skill)}
@@ -373,7 +373,7 @@ const Skill = ({ setDisplay, goBack }) => {
     <div style={{ overflow: "hidden" }} >
       <OverPage changingPage={changingPage} goBack={goBack}/>
       <Container
-        initial={{ x: outerWidth > 768 ? goBack ? -1000 : 1000 : 0, y: outerWidth > 768 ? 0 : goBack ? -1000 : 1000}}
+        initial={{ x: outerWidth > 768 ? goBack ? -2000 : "250vh" : 0, y: outerWidth > 768 ? 0 : goBack ? -1000 : 1000}}
         animate={{ x:  outerWidth > 768 ? changingPage ? -2000 : 0 : 0, y: outerWidth > 768 ? 0 : changingPage ? -1000 : 0 }}
         transition={{ duration: 2, ease: easeInOut }}
       >
@@ -396,8 +396,8 @@ const Skill = ({ setDisplay, goBack }) => {
         </LeftContainer>
         <TitleContainer onMouseEnter={() => setHoverBlack(true)} onMouseLeave={() => setHoverBlack(false)}>
           <Title
-            initial={{ x: outerWidth > 768 ? goBack ? -1000 : 1000 : 0, y: outerWidth > 768 ? 0 : goBack ? -1000 : 1000 }}
-            animate={{ x:  outerWidth > 768 ? changingPage ? -1000 : 0 : 0, y: outerWidth > 768 ? 0 : changingPage ? -1000 : 0 }}
+            initial={{ x: outerWidth > 768 ? goBack ? -2000 : 2000 : 0, y: outerWidth > 768 ? 0 : goBack ? -1000 : 1000 }}
+            animate={{ x:  outerWidth > 768 ? changingPage ? -2000 : 0 : 0, y: outerWidth > 768 ? 0 : changingPage ? -1000 : 0 }}
             transition={{ duration: 2, ease: easeInOut }}
           >
             Compétences
