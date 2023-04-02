@@ -290,10 +290,10 @@ const Home = ({setDisplay}) => {
             animate={{ opacity: page === 0 ? 1 : 0, y: page === 0 ? outerWidth <= 768 ? 100 : 200 : -1000 }}
             transition={{ delay: page === 0 ? 0.5 : 0, duration: page === 0 ? 1 : 2, ease: page === 0 ? "easeOut" : "easeIn" }}
             whileHover={{ }}
-          >Front-end Developpeur</SubTitle>
+          >Front-end Développeur</SubTitle>
           <Title
             initial={{ opacity: 0, y: 1000 }}
-            animate={{ opacity: 1, y: page === 1 ? outerWidth <= 768 ? outerWidth <= 375 ? -50 : -100 : 0 : page === 2 && outerWidth <= 768 ? -1000 : 1000, x: page > 1 && outerWidth > 768 ? -1000 : 0 }}
+            animate={{ opacity: 1, y: page > 0 ? outerWidth <= 768 ? outerWidth <= 375 ? -50 : -100 : 0 : page === 2 && outerWidth <= 768 ? -1000 : 1000, x: page > 1 && outerWidth > 768 ? -1000 : 0 }}
             transition={{ duration: page === 1 ? 2 : 1, ease: page === 1 ? "easeOut" : "easeIn" }}
             onMouseEnter={() => setIsHoveringText(true)}
             onMouseLeave={() => setIsHoveringText(false)}

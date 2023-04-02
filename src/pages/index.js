@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 //Containers
 import Home from "../containers/home";
@@ -14,13 +14,22 @@ const Main = styled.main`
 
 const IndexPage = () => {
 
-  const [display, setDisplay] = React.useState(0);
+  const [display, setDisplay] = useState(0);
+  const [goBack, setGoBack] = useState(false);
+
+  useEffect(() => {
+    if (goBack) {
+      setTimeout(() => {
+        setGoBack(false);
+      }, 2000);
+    }
+  }, [display]);
 
   return (
     <Main>
     {display === 0 && <Home setDisplay={setDisplay}/>}
-    {display === 1 && <Skill setDisplay={setDisplay}/>}
-    {display === 2 && <Production setDisplay={setDisplay}/>}
+    {display === 1 && <Skill setDisplay={setDisplay} goBack={goBack}/>}
+    {display === 2 && <Production setDisplay={setDisplay} goBack={goBack} setGoBack={setGoBack}/>}
     </Main>
   )
 }

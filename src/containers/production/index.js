@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { motion, easeInOut } from 'framer-motion';
+import { motion, easeInOut, useAnimationControls } from 'framer-motion';
 //Utils
 import ui from '../../utils/theme';
 import productions from '../../utils/production';
+//Images
+import arrow from '../../images/arrowWhite.svg';
 
 const OverPage = styled(motion.div)`
   position: absolute;
@@ -84,6 +86,8 @@ const Title = styled(motion.h1)`
   color: ${ui.primary};
   font-weight: 700;
   margin: 0;
+  width: 70%;
+  text-align: end;
 
   @media (max-width: 1144px) {
     font-size: 6rem;
@@ -127,6 +131,10 @@ const Carousel = styled(motion.div)`
   align-items: center;
   justify-content: center;
   height: 500px;
+
+  @media (max-width: 420px) {
+    height: 400px;
+  }
 `;
 
 const CarouselItem = styled(motion.div)`
@@ -212,8 +220,31 @@ const CarouselSubTitle = styled(motion.h3)`
   bottom: 20px;
 `;
 
+const Arrow = styled(motion.img)`
+  height: 50px;
+  width: 50px;
+  transform: rotate(180deg);
+`;
 
-const Production = () => {
+const Sequence = styled(motion.div)`
+  width: 100%;
+  height: 100%;
+`;
+
+const BackButton = styled(motion.div)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  width: 100%;
+  font-size: 2rem;
+  color: ${ui.primary};
+`;
+
+const TitlePart = styled(motion.span)`
+`;
+
+const Production = ({ setDisplay, goBack, setGoBack }) => {
 
   const isBrowser = () => typeof window !== "undefined"
   const outerWidth = isBrowser() ? window.outerWidth : null;
@@ -223,7 +254,10 @@ const Production = () => {
   const [hoverBlack, setHoverBlack] = useState(false);
   const [hovertiles, setHoverTiles] = useState(false);
   const [hoverItem, setHoverItem] = useState(false);
+  const [hoverTitle, setHoverTitle] = useState(false);
 
+  const control = useAnimationControls();
+  const controlTwo = useAnimationControls();
 
   const onMouseMove = (e) => {
     setMousePosition({ x: e.clientX - 30, y: e.clientY - 30 });
@@ -236,12 +270,61 @@ const Production = () => {
     };
   }, []);
 
+  const handleGoBack = () => {
+    setGoBack(true);
+    setTimeout(() => {
+      setDisplay(1);
+    }, 2000);
+  };
+
+  useEffect(() => {
+    hoverSequence();
+  }, [hoverTitle]);
+
+  const hoverSequence = async () => {
+    if (hoverTitle) {
+      await control.start({
+        opacity: 0,
+        transition: { duration: 0.5, ease: easeInOut }
+      });
+      control.start({
+        display: "none",
+        transition: { duration: 0.5, ease: easeInOut }
+      });
+      await controlTwo.start({
+        display: "inline",
+        transition: { duration: 0.5, ease: easeInOut }
+      });
+      await controlTwo.start({
+        opacity: 1,
+        transition: { duration: 0.5, ease: easeInOut }
+      });
+    } else {
+      await controlTwo.start({
+        opacity: 0,
+        transition: { duration: 0.5, ease: easeInOut }
+      });
+      controlTwo.start({
+        display: "none",
+        transition: { duration: 0.5, ease: easeInOut }
+      });
+      control.start({
+        display: "inline",
+        transition: { duration: 0.5, ease: easeInOut }
+      });
+      await control.start({
+        opacity: 1,
+        transition: { duration: 0.5, ease: easeInOut }
+      });
+    }
+  };
+
   return (
     <div style={{ overflow: "hidden" }}>
       <OverPage />
       <Container
         initial={{ x: outerWidth > 768 ? 1000 : 0, y: outerWidth > 768 ? 0 : 1000 }}
-        animate={{ x: 0, y: 0 }}
+        animate={{ x: goBack ? outerWidth > 768 ? 1000 : 0 : 0, y: goBack ? outerWidth > 768 ? 0 : 1000 : 0 }}
         transition={{ duration: 2, ease: easeInOut }}
       >
         <CustomCursor
@@ -253,14 +336,17 @@ const Production = () => {
             backdropFilter: hoverItem ? 'brightness(0.3)' : 'unset',
           }}
           transition={{ duration: 0.2, ease: easeInOut }}
-        >{hoverItem && "Drag Me"}</CustomCursor>
+        >
+          {hoverItem && "Drag Me"}
+          {hoverTitle && <Arrow src={arrow} initial={{ opacity: 0 }} animate={{ opacity: 1 }} />}
+        </CustomCursor>
         <LeftContainer 
           onMouseEnter={() => setHoverBlack(true)}
           onMouseLeave={() => setHoverBlack(false)}
         >
           <CarouselContainer
-            initial={{ x: outerWidth > 768 ? 1000 : 0, y: outerWidth > 768 ? 0 : 1000}}
-            animate={{ x: 0, y: 0 }}
+            initial={{ x: outerWidth > 768 ? 1500 : 0, y: outerWidth > 768 ? 0 : 1000}}
+            animate={{ x: goBack ? outerWidth > 768 ? 1000 : 0 : 0, y: goBack ? outerWidth > 768 ? 0 : 1000 : 0 }}
             transition={{ duration: 2.5, ease: easeInOut }}
           >
             <Carousel
@@ -316,14 +402,24 @@ const Production = () => {
               ))}
             </CarouselTiles>
           </CarouselContainer>
+          {outerWidth < 768 && <BackButton onClick={() => handleGoBack()}>Retour</BackButton>}
         </LeftContainer>
         <TitleContainer
         >
           <Title
             initial={{ x: outerWidth > 768 ? 1000 : 0, y: outerWidth > 768 ? 0 : 1000 }}
-            animate={{ x: 0, y: 0 }}
+            animate={{ x: goBack ? outerWidth > 768 ? 1000 : 0 : hoverTitle ? 10 : 0, y: goBack ? outerWidth > 768 ? 0 : 1000 : 0 }}
             transition={{ duration: 2, ease: easeInOut }}
-          >Réalisations</Title>
+            onMouseEnter={() => outerWidth > 768 && setHoverTitle(true)}
+            onMouseLeave={() => outerWidth > 768 && setHoverTitle(false)}
+            onClick={() => outerWidth > 768 && handleGoBack()}
+          >
+            <Sequence>
+              R
+               <TitlePart animate={controlTwo}>etour</TitlePart> 
+                <TitlePart animate={control}>éalisations</TitlePart>
+            </Sequence>
+          </Title>
         </TitleContainer>
       </Container>
     </div>
